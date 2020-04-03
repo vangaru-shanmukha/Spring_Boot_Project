@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.project.assignment.dao.TeacherRepository;
+import com.example.project.assignment.entity.Department;
 import com.example.project.assignment.entity.Teacher;
 
 @Service
@@ -43,6 +44,11 @@ public class TeacherServiceImpl implements TeacherService {
 	public void deleteById(String email) {
 		teacherRepository.deleteById(email);
 
+	}
+
+	@Override
+	public List<Teacher> findByDepartment(Department department) {
+		return teacherRepository.findByDepartment(department);
 	}
 
 }

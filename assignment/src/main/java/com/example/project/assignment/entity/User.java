@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -39,9 +40,10 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH })
 	@JoinTable(name = "users_roles", 
 	joinColumns = @JoinColumn(name = "username"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
+
 }

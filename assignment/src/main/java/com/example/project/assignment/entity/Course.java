@@ -1,6 +1,5 @@
 package com.example.project.assignment.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -48,24 +47,6 @@ public class Course {
 	public Course(String name,Department department) {
 		this.name = name;
 		this.department = department;
-	}
-	
-	public void addStudent(Student theStudent) {
-		
-		if(students == null) {
-			students = new ArrayList<Student>();
-		}
-		theStudent.addCourse(this);
-		students.add(theStudent);
-	}
-	
-	public void addTeacher(Teacher theTeacher) {
-		
-		if(teachers == null) {
-			teachers = new ArrayList<Teacher>();
-		}
-		theTeacher.addCourse(this);
-		teachers.add(theTeacher);
 	}
 
 }

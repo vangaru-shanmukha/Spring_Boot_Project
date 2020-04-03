@@ -2,6 +2,7 @@ package com.example.project.assignment.service;
 
 import java.util.List;
 
+import com.example.project.assignment.entity.Department;
 import com.example.project.assignment.entity.Teacher;
 
 public interface TeacherService {
@@ -13,4 +14,6 @@ public interface TeacherService {
 	public void save(Teacher theTeacher);
 
 	public void deleteById(String email);
+	
+	public List<Teacher> findByDepartment(Department department);
 }

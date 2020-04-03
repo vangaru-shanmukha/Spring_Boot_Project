@@ -15,6 +15,6 @@ public interface StudentService {
 	
 	public void deleteById(String theRollNo);
 	
-	public void findByDepartment(Department theDepartment);
+	public List<Student> findByDepartment(Department theDepartment);
 	
 }

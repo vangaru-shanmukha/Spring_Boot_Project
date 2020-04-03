@@ -3,14 +3,17 @@ package com.example.project.assignment.service;
 import java.util.List;
 
 import com.example.project.assignment.entity.Course;
+import com.example.project.assignment.entity.Department;
 
 public interface CourseService {
 
-	public List<Course> findAll();
+	List<Course> findAll();
 
-	public Course findById(int theId);
+	Course findById(int theId);
 
-	public void save(Course theCourse);
+	Course save(Course theCourse);
 
-	public void deleteById(int theId);
+	Course deleteById(int theId);
+	
+	List<Course> findByDepartment(Department department);
 }

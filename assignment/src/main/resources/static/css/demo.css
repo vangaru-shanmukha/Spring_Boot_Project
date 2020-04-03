@@ -20,3 +20,9 @@ table, th, td {
 	margin-top:10px;
 	float:left;
 }
+.input-group .department,.department{
+	margin-left: 20px;
+}
+.input-group .course,.course{
+	margin-left:40px;
+}

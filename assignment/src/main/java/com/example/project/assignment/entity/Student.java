@@ -1,6 +1,5 @@
 package com.example.project.assignment.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -68,20 +67,12 @@ public class Student{
 	@Column(name = "date_of_birth")
 	private String dateOfBirth;
 	
+	@NotNull(message = "is required")
 	@ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinTable(name = "enrolls",
 	joinColumns = @JoinColumn(name = "roll_number"),
 	inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses;
-	
-	public void addCourse(Course theCourse) {
-		
-		if(courses == null) {
-			courses = new ArrayList<Course>();
-		}
-		theCourse.addStudent(this);
-		courses.add(theCourse);
-	}
 	
 
 }

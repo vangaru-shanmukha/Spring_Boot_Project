@@ -42,11 +42,21 @@
 					<th>Last Name</th>
 					<td><span th:text="${user.getLastName()}"></span></td>
 				</tr>
-				<tr>
+				<tr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')">
 					<th>Department</th>
 					<td><span
 						th:text="${user.getDepartment().getDepartmentName()}"></span></td>
 				</tr>
+				<div sec:authorize="hasRole('ROLE_TEACHER')">
+					<th>Departments</th>
+					<tr>
+						<th></th>
+						<tr th:each="department : ${user.getDepartments()}">
+							<td></td>
+							<td><span th:text="${department.getDepartmentName()}"></span></td>
+						</tr>
+					</tr>
+				</div>
 			</tbody>
 		</table>
 	</div>
@@ -58,7 +68,17 @@
 		<!-- Add a link to point to /students/list ... this is for the managers -->
 
 		<p class="side">
-			<a th:href="@{/student/list}" class="btn btn-primary btn-sm mb-3">Students List</a>
+			<a th:href="@{/student/list(department=${user.getDepartment().getId()})}" class="btn btn-primary btn-sm mb-3">Students List</a>
+		</p>
+
+	</div>
+	
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+
+		<!-- Add a link to point to /students/list ... this is for the managers -->
+
+		<p class="side">
+			<a th:href="@{/teacher/list}" class="btn btn-primary btn-sm mb-3">Teachers List</a>
 		</p>
 
 	</div>

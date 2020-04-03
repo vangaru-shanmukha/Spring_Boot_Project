@@ -1,5 +1,7 @@
 package com.example.project.assignment.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,37 +19,33 @@ import com.example.project.assignment.service.UserService;
 @EnableWebSecurity
 public class Config extends WebSecurityConfigurerAdapter {
 
+	private static Logger logger = LoggerFactory.getLogger(Config.class);
+	
 	// add a reference to our security data source
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-	
-	@Autowired
-	private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 		
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-        System.out.println("-----------------> In authenticationManager");
+        logger.info("-----------------> In authenticationManager");
     }
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		System.out.println("------------------> In httpsecurity");
+		logger.info("------------------> In httpsecurity");
 		http.authorizeRequests()
-			.antMatchers("/home/profile").hasAnyRole("STUDENT","ADMIN")
+			.antMatchers("/home/profile").hasAnyRole("STUDENT","ADMIN","TEACHER")
 			.antMatchers("/student/**").hasRole("ADMIN")
 			.and()
 			.formLogin()
 				.loginPage("/login/showMyLoginPage")
 				.loginProcessingUrl("/authenticateTheUser")
-				.successHandler(customAuthenticationSuccessHandler)
 				.permitAll()
 			.and()
-			.logout().logoutSuccessHandler(customLogoutSuccessHandler).permitAll()
+			.logout()
+			.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/login/access-denied");
 		
@@ -61,7 +59,7 @@ public class Config extends WebSecurityConfigurerAdapter {
 	//authenticationProvider bean definition
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
-		System.out.println("-------------> In dap authentication provider");
+		logger.info("-------------> In dap authentication provider");
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userService); //set the custom user details service
 		auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt

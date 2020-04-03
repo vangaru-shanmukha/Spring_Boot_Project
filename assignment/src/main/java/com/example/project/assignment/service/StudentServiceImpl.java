@@ -3,6 +3,8 @@ package com.example.project.assignment.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import com.example.project.assignment.entity.Student;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+	
+	private static Logger logger = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	private StudentRepository studentRepository;
@@ -40,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void save(Student theStudent) {
-		System.out.println(theStudent.getDepartment());
+		logger.info(theStudent.getDepartment().toString());
 		
 		studentRepository.save(theStudent);
 
@@ -53,8 +57,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void findByDepartment(Department theDepartment) {
-		studentRepository.findByDepartment(theDepartment);
+	public List<Student> findByDepartment(Department theDepartment) {
+		return studentRepository.findByDepartment(theDepartment);
 		
 	}
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -16,12 +16,12 @@
 
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>Add Student</title>
+<title>Add Teacher</title>
 </head>
 <body>
 <!-- Add a logout button -->
 	<form th:action="@{/logout}" method="POST">
-		<h3 class="heading">Add Student</h3>
+		<h3 class="heading">Add Teacher</h3>
 		<input type="submit" value="Logout" class="logout"/>
 	</form>
 
@@ -41,7 +41,7 @@
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
-					<form th:action="@{/student/processForm}" th:object="${student}"
+					<form th:action="@{/teacher/processForm}" th:object="${teacher}"
 						method="POST" class="form-horizontal">
 						
 						<!-- Place for messages: error, alert etc ... -->
@@ -50,13 +50,25 @@
 					            <div>
 								
 <!-- 									Check for registration error -->
-									<div th:if="${addStudentError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
-										<span th:text="${addStudentError}"></span>
+									<div th:if="${addTeacherError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
+										<span th:text="${addTeacherError}"></span>
 									</div>
 																											
 					            </div>
 					        </div>
 					    </div>
+						
+						<!-- Email -->
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+							<input type="text" th:field="*{email}" placeholder="email (*)" class="form-control" th:errorclass="fieldError" />
+						</div>
+						<div th:if="${#fields.hasErrors('email')}"
+							style="margin-bottom: 25px" class="text-danger">
+							<ul>
+							  <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}" />
+							</ul>						
+						</div>
 						
 						<!-- First name -->
 						<div style="margin-bottom: 25px" class="input-group">
@@ -82,50 +94,29 @@
 							</ul>						
 						</div>
 						
-						
-						<!-- Roll Number -->
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<input type="text" th:field="*{rollNumber}" placeholder="roll number (*)" class="form-control" th:errorclass="fieldError" />
-						</div>
-						<div th:if="${#fields.hasErrors('rollNumber')}"
-							style="margin-bottom: 25px" class="text-danger">
-							<ul>
-							  <li th:each="err : ${#fields.errors('rollNumber')}" th:text="'Roll Number ' + ${err}" />
-							</ul>						
-						</div>
-						
 						<!-- Department -->
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<select th:field="*{department}" class="form-control" th:errorclass="fieldError">
+						<div style="margin-bottom: 25px" class="input-group"> 
 								<div th:each="department : ${departments}">
-									<option th:value="${department.getId()}" th:text="${department.getDepartmentName()}"></option>
+									<label>Department</label><br>
+									<input type="checkbox" name="departments" th:value="${department.getId()}" class="department"/>
+            						<label th:text="${department.getDepartmentName()}"></label><br>
+            							<label>Courses</label>
+            							<div th:each="course : ${courses}">
+											<span th:if="${department.getId() == course.getDepartment().getId()}">
+												<input type="checkbox" name="courses" th:value="${course.getId()}" class="course"/>
+            									<label th:text="${course.getName()}"></label>
+            								</span>
+										</div>
 								</div>
-							</select>
 						</div>
-						<div th:if="${#fields.hasErrors('department')}"
+						<div th:if="${#fields.hasErrors('departments')}"
 							style="margin-bottom: 25px" class="text-danger">
 							<ul>
-							  <li th:each="err : ${#fields.errors('department')}" th:text="'department ' + ${err}" />
+							  <li th:each="err : ${#fields.errors('departments')}" th:text="'department ' + ${err}" />
 							</ul>						
 						</div>
-
-						<!-- Courses -->
-						<label>Courses</label><br>
-						<div th:each="course : ${courses}">
-								<input type="checkbox" name="courses"
-								th:value="${course.getId()}" class="course" /> <label
-								th:text="${course.getName()}"></label>
-						</div>
-						<div th:if="${#fields.hasErrors('courses')}"
-							style="margin-bottom: 25px" class="text-danger">
-							<ul>
-							  <li th:each="err : ${#fields.errors('courses')}" th:text="'course ' + ${err}" />
-							</ul>						
-						</div>
-
-						<!-- House Number -->
+						
+<!-- 						House Number -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
 							<input type="text" th:field="*{houseNumber}" placeholder="House Number (*)" class="form-control" th:errorclass="fieldError" />

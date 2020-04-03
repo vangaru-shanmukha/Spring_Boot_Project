@@ -15,13 +15,13 @@
 	
 <link rel="stylesheet" href="/css/demo.css">
 
-<title>Update Student</title>
+<title>Update Teacher</title>
 </head>
 
 <body>
 
 		<form th:action="@{/logout}" method="POST">
-			<h3 style="float: left" class="heading">Update Student</h3>
+			<h3 style="float: left" class="heading">Update Teacher</h3>
 			<input type="submit" value="Logout" class="logout" />
 		</form>
 		<br>
@@ -29,11 +29,11 @@
 		<div class="container">
 			<hr>
 
-		<form th:action="@{/student/save}" th:object="${student}"
+		<form th:action="@{/teacher/save}" th:object="${teacher}"
 			method="POST">
 
 			<!-- Add hidden form field to handle update -->
-			<input type="hidden" th:field="*{rollNumber}" /> 
+			<input type="hidden" th:field="*{email}" /> 
 			
 			<label>First Name : </label>
 			<input type="text"
@@ -56,30 +56,38 @@
 						th:text="'Last name ' + ${err}" />
 				</ul>
 			</div>
-			<label>Department : </label> 
-			<select th:field="*{department}" class="form-control mb-4 col-4">
-				<div th:each="department : ${departments}">
-					<option th:value="${department.getId()}" th:text="${department.getDepartmentName()}"></option>
-				</div>
-			</select>
-			<div th:if="${#fields.hasErrors('department')}"
-				style="margin-bottom: 25px" class="text-danger">
-				<ul>
-					<li th:each="err : ${#fields.errors('department')}"
-						th:text="'department ' + ${err}" />
-				</ul>
-			</div>
-			<label>Courses : </label>
-			<div th:each="course : ${courses}">
-						<span th:if="${studentCourses.contains(course)}">
+			<div th:each="department : ${departments}">
+				<label>Department : </label> 
+					<span th:if="${teacherDepartments.contains(department)}">
+						<input type="checkbox" name="departments" th:value="${department.getId()}" class="department"
+							th:checked = "checked"/>
+            			<label th:text="${department.getDepartmentName()}"></label>
+					</span>
+					<span th:if="${!teacherDepartments.contains(department)}">
+						<input type="checkbox" name="departments" th:value="${department.getId()}" class="department" />
+            			<label th:text="${department.getDepartmentName()}"></label>
+					</span><br>
+					<label>Courses</label>
+            		<div th:each="course : ${courses}">
+					<span th:if="${department.getId() == course.getDepartment().getId()}">
+						<span th:if="${teacherCourses.contains(course)}">
 							<input type="checkbox" name="courses" th:value="${course.getId()}" class="course" th:checked="checked"/>
             				<label th:text="${course.getName()}"></label>
             			</span>
-            			<span th:if="${!studentCourses.contains(course)}">
+            			<span th:if="${!teacherCourses.contains(course)}">
 							<input type="checkbox" name="courses" th:value="${course.getId()}" class="course" />
             				<label th:text="${course.getName()}"></label>
             			</span>
+            		</span>
 					</div>
+			</div>
+			<div th:if="${#fields.hasErrors('departments')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('departments')}"
+						th:text="'department ' + ${err}" />
+				</ul>
+			</div>
 			<label>House Number : </label> 
 			<input type="text" th:field="*{houseNumber}"
 				class="form-control mb-4 col-4" placeholder="House Number">
@@ -128,7 +136,7 @@
 		</form>
 
 		<hr>
-		<a th:href="@{/student/list}">Back to Student List</a>
+		<a th:href="@{/teacher/list}">Back to Teacher List</a>
 
 	</div>
 </body>

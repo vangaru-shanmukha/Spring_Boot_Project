@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.project.assignment.dao.CourseRepository;
 import com.example.project.assignment.entity.Course;
+import com.example.project.assignment.entity.Department;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -34,15 +35,22 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void save(Course theCourse) {
+	public Course save(Course theCourse) {
 		courseRepository.save(theCourse);
+		return theCourse;
 
 	}
 
 	@Override
-	public void deleteById(int theId) {
+	public Course deleteById(int theId) {
+		Course theCourse = findById(theId);
 		courseRepository.deleteById(theId);
+		return theCourse;
+	}
 
+	@Override
+	public List<Course> findByDepartment(Department department) {
+		return courseRepository.findByDepartment(department);
 	}
 
 }
