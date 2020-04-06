@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+	
+<link rel="stylesheet" href="/css/demo.css">
+
+<title>Update Teacher</title>
+</head>
+
+<body>
+
+		<form th:action="@{/logout}" method="POST">
+			<h3 style="float: left" class="heading">Update Teacher</h3>
+			<input type="submit" value="Logout" class="logout" />
+		</form>
+		<br>
+		<br>
+		<div class="container">
+			<hr>
+
+		<form th:action="@{/teacher/save}" th:object="${teacher}"
+			method="POST">
+
+			<!-- Add hidden form field to handle update -->
+			<input type="hidden" th:field="*{email}" /> 
+			
+			<label>First Name : </label>
+			<input type="text"
+				th:field="*{firstName}" class="form-control mb-4 col-4"
+				placeholder="First name">
+			<div th:if="${#fields.hasErrors('firstName')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('firstName')}"
+						th:text="'First name ' + ${err}" />
+				</ul>
+			</div>
+			<label>Last Name : </label> 
+			<input type="text" th:field="*{lastName}"
+				class="form-control mb-4 col-4" placeholder="Last name">
+			<div th:if="${#fields.hasErrors('lastName')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('lastName')}"
+						th:text="'Last name ' + ${err}" />
+				</ul>
+			</div>
+			<div th:each="department : ${departments}">
+				<label>Department : </label> 
+					<span th:if="${teacherDepartments.contains(department)}">
+						<input type="checkbox" name="departments" th:value="${department.getId()}" class="department"
+							th:checked = "checked"/>
+            			<label th:text="${department.getDepartmentName()}"></label>
+					</span>
+					<span th:if="${!teacherDepartments.contains(department)}">
+						<input type="checkbox" name="departments" th:value="${department.getId()}" class="department" />
+            			<label th:text="${department.getDepartmentName()}"></label>
+					</span><br>
+					<label>Courses</label>
+            		<div th:each="course : ${courses}">
+					<span th:if="${department.getId() == course.getDepartment().getId()}">
+						<span th:if="${teacherCourses.contains(course)}">
+							<input type="checkbox" name="courses" th:value="${course.getId()}" class="course" th:checked="checked"/>
+            				<label th:text="${course.getName()}"></label>
+            			</span>
+            			<span th:if="${!teacherCourses.contains(course)}">
+							<input type="checkbox" name="courses" th:value="${course.getId()}" class="course" />
+            				<label th:text="${course.getName()}"></label>
+            			</span>
+            		</span>
+					</div>
+			</div>
+			<div th:if="${#fields.hasErrors('departments')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('departments')}"
+						th:text="'department ' + ${err}" />
+				</ul>
+			</div>
+			<label>House Number : </label> 
+			<input type="text" th:field="*{houseNumber}"
+				class="form-control mb-4 col-4" placeholder="House Number">
+			<div th:if="${#fields.hasErrors('houseNumber')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('houseNumber')}"
+						th:text="'House Number ' + ${err}" />
+				</ul>
+			</div>
+			<label>Street : </label> 
+			<input type="text" th:field="*{street}" class="form-control mb-4 col-4"
+				placeholder="street">
+			<div th:if="${#fields.hasErrors('street')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('street')}"
+						th:text="'street ' + ${err}" />
+				</ul>
+			</div>
+			<label>Address : </label> 
+			<select th:field="*{address}" class="form-control mb-4 col-4">
+				<div th:each="address : ${addresses}">
+					<option th:value="${address.getZipCode()}" th:text="${address.getZipCode()}"></option>
+				</div>
+			</select>
+			<div th:if="${#fields.hasErrors('address')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('address')}"
+						th:text="'address ' + ${err}" />
+				</ul>
+			</div>
+			<label>Date of Birth : </label> 
+			<input type="text" th:field="*{dateOfBirth}"
+				class="form-control mb-4 col-4" placeholder="Date Of Birth">
+			<div th:if="${#fields.hasErrors('dateOfBirth')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('dateOfBirth')}"
+						th:text="'dateOfBirth ' + ${err}" />
+				</ul>
+			</div>
+			<button type="submit" class="btn btn-info col-2">Save</button>
+
+		</form>
+
+		<hr>
+		<a th:href="@{/teacher/list}">Back to Teacher List</a>
+
+	</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

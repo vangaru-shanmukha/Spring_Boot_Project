@@ -1,0 +1,28 @@
+.funny {
+	font-style: italic;
+	color: green;
+}
+table, th, td {
+  border: 0px solid black;
+  width: 50%;
+  text-align: left;
+}
+.side{
+	margin-left : 20px;
+}
+.logout{
+	margin-right: 80px;
+	margin-top: 10px;
+	float: right;
+}
+.heading{
+	margin-left: 80px;
+	margin-top:10px;
+	float:left;
+}
+.input-group .department,.department{
+	margin-left: 20px;
+}
+.input-group .course,.course{
+	margin-left:40px;
+}

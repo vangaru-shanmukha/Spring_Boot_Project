@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/demo.css">
+
+<title>Home Page</title>
+</head>
+
+<body>
+
+	<!-- Add a logout button -->
+	<form th:action="@{/logout}" method="POST">
+		<h3 class="heading">Welcome!</h3>
+		<input type="submit" value="Logout" class="logout"/>
+	</form>
+
+	<br><br>
+		
+	<hr>
+	
+	<div>
+		<table align="center">
+			<tbody>
+				<tr>
+					<th>First Name</th>
+					<td><span th:text="${user.getFirstName()}"></span></td>
+				</tr>
+				<tr>
+					<th>Last Name</th>
+					<td><span th:text="${user.getLastName()}"></span></td>
+				</tr>
+				<tr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')">
+					<th>Department</th>
+					<td><span
+						th:text="${user.getDepartment().getDepartmentName()}"></span></td>
+				</tr>
+				<div sec:authorize="hasRole('ROLE_TEACHER')">
+					<th>Departments</th>
+					<tr>
+						<th></th>
+						<tr th:each="department : ${user.getDepartments()}">
+							<td></td>
+							<td><span th:text="${department.getDepartmentName()}"></span></td>
+						</tr>
+					</tr>
+				</div>
+			</tbody>
+		</table>
+	</div>
+
+	<hr>
+	
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+
+		<!-- Add a link to point to /students/list ... this is for the managers -->
+
+		<p class="side">
+			<a th:href="@{/student/list(department=${user.getDepartment().getId()})}" class="btn btn-primary btn-sm mb-3">Students List</a>
+		</p>
+
+	</div>
+	
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+
+		<!-- Add a link to point to /students/list ... this is for the managers -->
+
+		<p class="side">
+			<a th:href="@{/teacher/list}" class="btn btn-primary btn-sm mb-3">Teachers List</a>
+		</p>
+
+	</div>
+
+	<hr>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
