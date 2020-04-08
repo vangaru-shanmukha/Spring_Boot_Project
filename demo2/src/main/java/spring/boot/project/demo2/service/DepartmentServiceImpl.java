@@ -12,12 +12,13 @@ import spring.boot.project.demo2.entity.Department;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
+	@Autowired
 	DepartmentRepository departmentRepository;
 	
-	@Autowired
-	public DepartmentServiceImpl(DepartmentRepository theDepartmentRepository) {
-		departmentRepository = theDepartmentRepository;
-	}
+//	@Autowired
+//	public DepartmentServiceImpl(DepartmentRepository theDepartmentRepository) {
+//		departmentRepository = theDepartmentRepository;
+//	}
 	
 	@Override
 	public List<Department> findAll() {

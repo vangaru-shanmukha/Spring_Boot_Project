@@ -46,13 +46,15 @@ public class Teacher {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@JsonBackReference(value = "teachers")
+//	@JsonBackReference(value = "teachers")
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinTable(name = "belongsto", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "department_id"))
 	private List<Department> departments;
 
-	@JsonBackReference(value="course")
+//	@JsonBackReference(value="course")
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinTable(name = "teaches", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "course_id"))
@@ -68,6 +70,7 @@ public class Teacher {
 	@Column(name = "street")
 	private String street;
 
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "zipcode")

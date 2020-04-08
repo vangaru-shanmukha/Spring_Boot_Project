@@ -42,12 +42,14 @@ public class Admin {
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToOne(cascade =  { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "zipcode")
 	private Address address;
 	
-	@JsonBackReference(value = "admins")
+//	@JsonBackReference(value = "admins")
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToOne(cascade =  { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "department_id")

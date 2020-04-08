@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +42,8 @@ public class Student{
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@JsonBackReference(value = "students")
+//	@JsonBackReference(value = "students")
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToOne(cascade =  { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "department_id")
@@ -57,6 +59,7 @@ public class Student{
 	@Column(name = "street")
 	private String street;
 	
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToOne(cascade =  { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "zipcode")
@@ -72,7 +75,8 @@ public class Student{
 	@Column(name = "date_of_birth")
 	private String dateOfBirth;
 
-	@JsonBackReference(value = "courses")
+//	@JsonBackReference(value = "courses")
+	@JsonIgnore
 	@NotNull(message = "is required")
 	@ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinTable(name = "enrolls",

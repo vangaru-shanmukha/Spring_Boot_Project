@@ -2,6 +2,7 @@ package spring.boot.project.demo2.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ import spring.boot.project.demo2.dao.RoleRepository;
 import spring.boot.project.demo2.entity.Address;
 import spring.boot.project.demo2.entity.Course;
 import spring.boot.project.demo2.entity.Department;
+import spring.boot.project.demo2.entity.Role;
 import spring.boot.project.demo2.entity.Student;
 import spring.boot.project.demo2.entity.User;
 import spring.boot.project.demo2.service.AddressService;

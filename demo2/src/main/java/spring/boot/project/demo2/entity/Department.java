@@ -36,28 +36,37 @@ public class Department {
 	@Column(name = "name")
 	private String departmentName;
 
-	@JsonManagedReference(value = "students")
+//	@JsonManagedReference(value = "students")
+	@JsonIgnore
 	@OneToMany(mappedBy = "department", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private List<Student> students;
 	
-	@JsonManagedReference(value = "courses")
+	@JsonIgnore
+//	@JsonManagedReference(value = "courses")
 	@OneToMany(mappedBy = "department", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private List<Course> courses;
 
-	@JsonManagedReference(value = "admins")
+	@JsonIgnore
+//	@JsonManagedReference(value = "admins")
 	@OneToMany(mappedBy = "department", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private List<Admin> admins;
 
-	@JsonManagedReference(value = "teachers")
+	@JsonIgnore
+//	@JsonManagedReference(value = "teachers")
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	@JoinTable(name = "belongsto", joinColumns = @JoinColumn(name = "department_id"), inverseJoinColumns = @JoinColumn(name = "email"))
 	private List<Teacher> teachers;
 
 	public Department(String dname) {
+		departmentName = dname;
+	}
+	
+	public Department(int id,String dname) {
+		this.id = id;
 		departmentName = dname;
 	}
 

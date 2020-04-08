@@ -11,9 +11,9 @@ public interface CourseService {
 
 	Course findById(int theId);
 
-	Course save(Course theCourse);
+	void save(Course theCourse);
 
-	Course deleteById(int theId);
+	void deleteById(int theId);
 	
 	List<Course> findByDepartment(Department department);
 }

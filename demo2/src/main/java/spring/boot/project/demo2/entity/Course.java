@@ -34,24 +34,33 @@ public class Course {
 	@Column(name = "name")
 	private String name;
 	
-	@JsonBackReference(value = "courses")
+	@JsonIgnore
+//	@JsonBackReference(value = "courses")
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name = "department_id")
 	private Department department;
 	
-	@JsonManagedReference(value = "courses")
+	@JsonIgnore
+//	@JsonManagedReference(value = "courses")
 	@ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinTable(name = "enrolls",
 	joinColumns = @JoinColumn(name = "course_id"),
 	inverseJoinColumns = @JoinColumn(name = "roll_number"))
 	private List<Student> students;
 	
-	@JsonManagedReference(value = "course")
+	@JsonIgnore
+//	@JsonManagedReference(value = "course")
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinTable(name = "teaches", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "email"))
 	private List<Teacher> teachers;
 	
 	public Course(String name,Department department) {
+		this.name = name;
+		this.department = department;
+	}
+	
+	public Course(int id,String name,Department department) {
+		this.id = id;
 		this.name = name;
 		this.department = department;
 	}
